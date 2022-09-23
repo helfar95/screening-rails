@@ -1,9 +1,13 @@
-class CommentsController < ApplicationController
-  def users_comments
-    posts = Post.all
-    comments = posts.map(&:comments).flatten
-    @user_comments = comments.select do |comment|
-      comment.author.username == params[:username]
-    end
-  end
+# app/models/post.rb
+class Post < ApplicationRecord
+  belongs_to :user
+end
+
+# app/models/user.rb
+class User < ApplicationRecord
+  has_many :posts
+end
+
+Post.all.each do |post|
+  puts "#{post.title} was written by #{post.user.username}"
 end
